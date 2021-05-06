@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+
+    data-svc:
+        restart: on-failure
+        build: ./data
+
+    user-svc:
+        restart: on-failure
+        build: ./user
+
+    wsgi-svc:
+        restart: on-failure
+        build: ./wsgi
+
+    revprox-svc:
+        restart: on-failure
+        build: ./revprox
+        ports:
+            - 80:80
+        depends_on:
+            - data-svc
+            - user-svc
+            - wsgi-svc
